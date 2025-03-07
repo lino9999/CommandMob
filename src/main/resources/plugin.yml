@@ -1,0 +1,14 @@
+name: SimpleCommandMob
+version: '1.2'
+main: com.Lino.SimpleCommandMob.SimpleCommandMob
+api-version: '1.21'
+authors: [Lino9999]
+commands:
+  mobcommands:
+    description: Reload config
+    usage: /mobcommands reload
+    permission: mobcommands.reload
+permissions:
+  mobcommands.reload:
+    description: Permission to reload the plugin
+    default: op

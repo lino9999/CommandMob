@@ -1,0 +1,18 @@
+messages:
+  no-permission: "&4You can't attack: %mob%!"
+  reward-message: "&6You got a reward for killing %mob%!"
+  admin-reload: "&aConfiguration successfully reloaded!"
+
+mobs:
+  CREEPER:
+    commands:
+      "minecraft:give %player% tnt 3": 40 #40% of probability
+      "minecraft:give %player% gunpowder 10": 30 #30% of probability
+      "effect give %player% speed 30 2": 20 #20% of probability
+      "eco take %player% 100": 10 #10% of probability
+
+  ENDER_DRAGON:
+    permission: "mobs.enderdragon" #You need permission to damage the mob
+    commands:
+      "minecraft:give %player% dragon_egg 1": 80
+      "minecraft:give %player% elytra 1": 20
