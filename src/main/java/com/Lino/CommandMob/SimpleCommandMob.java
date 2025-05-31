@@ -110,32 +110,41 @@ public class SimpleCommandMob extends JavaPlugin implements Listener, CommandExe
         if (config == null) return;
 
         String command = config.getRandomCommand();
-        if (command != null) {
-            // Parse and execute command
-            executeCommand(command
-                            .replace("%player%", killer.getName())
-                            .replace("%uuid%", killer.getUniqueId().toString())
-                            .replace("%world%", killer.getWorld().getName())
-                            .replace("%x%", String.valueOf(killer.getLocation().getBlockX()))
-                            .replace("%y%", String.valueOf(killer.getLocation().getBlockY()))
-                            .replace("%z%", String.valueOf(killer.getLocation().getBlockZ())),
-                    killer, event.getEntityType().name());
+        if (command != null && !command.isEmpty()) {
+            // Parse command with placeholders
+            String parsed = command
+                    .replace("%player%", killer.getName())
+                    .replace("%uuid%", killer.getUniqueId().toString())
+                    .replace("%world%", killer.getWorld().getName())
+                    .replace("%x%", String.valueOf(killer.getLocation().getBlockX()))
+                    .replace("%y%", String.valueOf(killer.getLocation().getBlockY()))
+                    .replace("%z%", String.valueOf(killer.getLocation().getBlockZ()));
+
+            // Remove minecraft: prefix if present (it's not needed for console commands)
+            if (parsed.startsWith("minecraft:")) {
+                parsed = parsed.substring(10); // length of "minecraft:"
+            }
+            // Remove leading slash if present
+            if (parsed.length() > 0 && parsed.charAt(0) == '/') {
+                parsed = parsed.substring(1);
+            }
+
+            executeCommand(parsed, killer, event.getEntityType().name());
         }
     }
 
     private void executeCommand(String command, Player player, String mobName) {
-        // Remove leading slash if present
-        if (command.charAt(0) == '/') {
-            command = command.substring(1);
-        }
+        try {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-
-        // Send reward message
-        String msg = messages.get("reward-message");
-        if (msg != null && !msg.isEmpty()) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    msg.replace("%mob%", mobName.toLowerCase().replace('_', ' '))));
+            // Send reward message
+            String msg = messages.get("reward-message");
+            if (msg != null && !msg.isEmpty()) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        msg.replace("%mob%", mobName.toLowerCase().replace('_', ' '))));
+            }
+        } catch (Exception e) {
+            getLogger().warning("Failed to execute command: " + command + " - " + e.getMessage());
         }
     }
 
