@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="SimpleCommandMob:jar">
     <output-path>$PROJECT_DIR$/../Plugin MC compilati</output-path>
     <root id="archive" name="SimpleCommandMob.jar">
-      <element id="module-output" name="SimpleCommandMob" />
+      <element id="module-output" name="CommandMob" />
     </root>
   </artifact>
 </component>

@@ -1,18 +1,52 @@
-messages:
-  no-permission: "&4You can't attack: %mob%!"
-  reward-message: "&6You got a reward for killing %mob%!"
-  admin-reload: "&aConfiguration successfully reloaded!"
+# SimpleCommandMob Configuration
+# Plugin by Lino9999
 
+# Messages displayed to players
+messages:
+  reward-message: "&aYou received a reward for killing %mob%!"
+  admin-reload: "&aConfiguration reloaded successfully!"
+  unknown-command: "&cUnknown command. Use /mobcommands reload"
+  reload-error: "&cError while reloading configuration: %error%"
+
+# Mob configurations
+# Each mob can have:
+# - commands: List of commands with their weights (probabilities)
 mobs:
+  # Creeper example
   CREEPER:
     commands:
-      "minecraft:give %player% tnt 3": 40 #40% of probability
-      "minecraft:give %player% gunpowder 10": 30 #30% of probability
-      "effect give %player% speed 30 2": 20 #20% of probability
-      "eco take %player% 100": 10 #10% of probability
+      "give %player% tnt 3": 40                    # 40% probability
+      "give %player% gunpowder 10": 30            # 30% probability
+      "effect give %player% speed 30 2": 20       # 20% probability
+      "eco take %player% 100": 10                 # 10% probability
 
+  # Ender Dragon
   ENDER_DRAGON:
-    permission: "mobs.enderdragon" #You need permission to damage the mob
     commands:
-      "minecraft:give %player% dragon_egg 1": 80
-      "minecraft:give %player% elytra 1": 20
+      "give %player% dragon_egg 1": 80            # 80% probability
+      "give %player% elytra 1": 20               # 20% probability
+
+  # More examples
+  ZOMBIE:
+    commands:
+      "give %player% rotten_flesh 5": 60
+      "give %player% iron_ingot 1": 30
+      "effect give %player% regeneration 10 1": 10
+
+  SKELETON:
+    commands:
+      "give %player% bone 3": 50
+      "give %player% arrow 10": 40
+      "give %player% bow 1": 10
+
+  WITHER:
+    commands:
+      "give %player% nether_star 1": 100
+  
+  # Placeholders available:
+  # %player% - Player name
+  # %uuid% - Player UUID
+  # %world% - World name
+  # %x% - Player X coordinate
+  # %y% - Player Y coordinate
+  # %z% - Player Z coordinate
